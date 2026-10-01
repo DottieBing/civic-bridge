@@ -71,23 +71,26 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav className={`text-[14px] font-medium leading-[22.9px] tracking-[-0.42px] transition ${
-            pathname === l.href ? "text-teal" : "text-[#474747] hover:text-navy"
-          } ${i === 0 ? "xl:w-[77px] xl:text-center" : ""}`}>
+        <nav className="mt-4 flex flex-col gap-5 border-t border-gray-200 px-6 py-6 lg:hidden">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="text-[16px] font-medium text-[#474747]"
+              className={`text-[16px] font-medium transition ${
+                pathname === l.href
+                  ? "text-teal"
+                  : "text-[#474747] hover:text-navy"
+              }`}
             >
               {l.label}
             </Link>
           ))}
+
           <Link
             href="/get-involved"
             onClick={() => setOpen(false)}
-            className="w-fit rounded-pill bg-amber px-8 py-3 text-[14px] font-bold text-[#1c1c1c]"
+            className="w-fit rounded-[38.65px] bg-amber px-8 py-3 text-[14px] font-bold text-[#1c1c1c]"
           >
             Donate
           </Link>
