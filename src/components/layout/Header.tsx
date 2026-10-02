@@ -21,16 +21,10 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="relative z-50 w-full pt-3">
+    <header className="relative z-50 w-full pb-4 pt-4 lg:pt-[27px]">
       <div className="mx-auto flex w-full max-w-[1364px] items-center justify-between px-6 lg:px-8">
-        <Link href="/" aria-label="Civic Bridge Africa home">
-          <Image
-            src="/images/logo.svg"
-            alt="Civic Bridge Africa"
-            width={89}
-            height={89}
-            priority
-          />
+        <Link href="/" aria-label="Civic Bridge Africa home" className="xl:ml-[23px]">
+          <Image src="/images/logo.svg" alt="Civic Bridge Africa" width={45} height={45} priority />
         </Link>
 
         <div className="hidden items-center lg:flex lg:gap-12 xl:gap-[172px]">
@@ -54,7 +48,7 @@ export default function Header() {
                 </button>
                 <Link
                 href="/get-involved"
-                className="flex w-[194px] items-center justify-center rounded-[38.65px] bg-amber pb-[22px] pt-[24px] text-[14px] font-bold leading-[12px] tracking-[-0.14px] text-[#1c1c1c] transition hover:brightness-95"
+                className="flex w-[194px] items-center justify-center xl:mr-[5px] rounded-[38.65px] bg-amber pb-[22px] pt-[24px] text-[14px] font-bold leading-[12px] tracking-[-0.14px] text-[#1c1c1c] transition hover:brightness-95"
                 >
                 Donate
                 </Link>
