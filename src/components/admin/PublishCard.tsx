@@ -5,6 +5,7 @@ import { Card } from "@/components/admin/ui";
 export default function PublishCard({
   published,
   featured,
+  showFeatured = true,
   featuredHint = "Shown first on its page.",
   pending,
   cancelHref,
@@ -12,6 +13,7 @@ export default function PublishCard({
 }: {
   published?: boolean;
   featured?: boolean;
+  showFeatured?: boolean;
   featuredHint?: string;
   pending: boolean;
   cancelHref: string;
@@ -28,13 +30,15 @@ export default function PublishCard({
           </span>
         </span>
       </label>
-      <label className="flex items-start gap-3 text-[15px] text-navy">
-        <input type="checkbox" name="featured" defaultChecked={featured ?? false} className="mt-1 size-4 accent-[#1a2c36]" />
-        <span>
-          Featured
-          <span className="block text-[13px] text-black/50">{featuredHint}</span>
-        </span>
-      </label>
+      {showFeatured && (
+        <label className="flex items-start gap-3 text-[15px] text-navy">
+          <input type="checkbox" name="featured" defaultChecked={featured ?? false} className="mt-1 size-4 accent-[#1a2c36]" />
+          <span>
+            Featured
+            <span className="block text-[13px] text-black/50">{featuredHint}</span>
+          </span>
+        </label>
+      )}
       {children}
       <div className="flex items-center gap-4 pt-1">
         <button

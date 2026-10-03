@@ -53,3 +53,39 @@ export type Insight = {
   created_at: string;
   updated_at: string;
 };
+
+export type Speaker = { name: string; role: string; photo: string };
+
+export type EventItem = {
+  id: string;
+  slug: string;
+  title: string;
+  label: string | null;
+  summary: string | null;
+  body: string | null;
+  cover_image: string | null;
+  starts_at: string;
+  ends_at: string | null;
+  location: string | null;
+  formats: string[];
+  registration_url: string | null;
+  speakers: Speaker[];
+  featured: boolean;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CaseStudy = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  body: string | null;
+  cover_image: string | null;
+  location: string | null;
+  published_on: string | null;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};

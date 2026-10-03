@@ -1,18 +1,8 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
+import CaseStudyCard from "@/components/impact/CaseStudyCard";
+import type { CaseStudy } from "@/lib/types";
 
-const GRADIENT = "linear-gradient(135deg, #6fcdcf 0%, #c4fbf9 100%)";
-
-// Placeholder content copied from the design — replace with real case studies.
-const studies = Array.from({ length: 3 }, (_, i) => ({
-  id: i + 1,
-  title: "Community civic learning changed how a council listens",
-  body: "Over six months, structured dialogue reshaped participatory practice in one local council.",
-  href: "#",
-}));
-
-export default function CaseStudies() {
+export default function CaseStudies({ studies }: { studies: CaseStudy[] }) {
   return (
     <section className="pb-16 pt-16 lg:pb-[159px] lg:pt-[137px]">
       <Container>
@@ -23,37 +13,15 @@ export default function CaseStudies() {
           Case studies from the field.
         </h2>
 
-        <div className="mt-10 grid gap-10 md:grid-cols-2 lg:mt-[89px] lg:grid-cols-3 lg:gap-x-[39px]">
-          {studies.map((s) => (
-            <article
-              key={s.id}
-              className="flex w-full max-w-[407px] flex-col overflow-hidden rounded-[44px] border border-black/20 bg-white"
-            >
-              <div
-                className="h-[290px] shrink-0"
-                style={{ backgroundImage: GRADIENT }}
-              />
-              <div className="flex min-h-[276px] flex-col px-[34px] pb-[48px] pt-[34px]">
-                <p className="text-[10.4px] font-medium uppercase leading-[14px] tracking-[1.2px] text-teal-label">
-                  Case study
-                </p>
-                <h3 className="mt-[7px] text-[22px] font-medium leading-[28px] text-black">
-                  {s.title}
-                </h3>
-                <p className="mt-3 max-w-[340px] text-[14.5px] leading-[29px] tracking-[0.2px] text-black">
-                  {s.body}
-                </p>
-                <Link
-                  href={s.href}
-                  className="mt-auto inline-flex w-fit items-center gap-[7px] pt-3 text-[16px] font-bold leading-[24px] text-navy transition hover:opacity-70"
-                >
-                  Read case study
-                  <ArrowRight size={14} strokeWidth={1.75} />
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+        {studies.length === 0 ? (
+          <p className="mt-10 text-[18px] text-black">Stories will appear here soon.</p>
+        ) : (
+          <div className="mt-10 grid gap-10 md:grid-cols-2 lg:mt-[89px] lg:grid-cols-3 lg:gap-x-[39px]">
+            {studies.slice(0, 6).map((s) => (
+              <CaseStudyCard key={s.id} s={s} />
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

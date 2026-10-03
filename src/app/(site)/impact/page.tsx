@@ -4,12 +4,16 @@ import ImpactStatsGrid from "@/components/impact/ImpactStatsGrid";
 import ImpactAreas from "@/components/impact/ImpactAreas";
 import CaseStudies from "@/components/impact/CaseStudies";
 import AnnualReports from "@/components/impact/AnnualReports";
+import { getCaseStudies } from "@/lib/content";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Impact | Civic Bridge Africa",
 };
 
-export default function ImpactPage() {
+export default async function ImpactPage() {
+  const studies = await getCaseStudies();
   return (
     <>
       <PageHero
@@ -20,7 +24,7 @@ export default function ImpactPage() {
       />
       <ImpactStatsGrid />
       <ImpactAreas />
-      <CaseStudies />
+      <CaseStudies studies={studies} />
       <AnnualReports />
     </>
   );

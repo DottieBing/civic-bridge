@@ -25,3 +25,14 @@ export const INSIGHT_CATEGORIES = [
   "Commentary",
   "Community",
 ];
+
+export const EVENT_LABELS = [
+  "Public forum",
+  "Workshop",
+  "Training",
+  "Webinar",
+  "Conference",
+  "Town hall",
+];
+
+export const EVENT_FORMATS = ["In person", "Online"];
