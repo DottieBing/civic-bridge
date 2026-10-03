@@ -1,6 +1,20 @@
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+
+export default function NotFound() {
+  return (
+    <>
+      <Header />
+      <main>
+        <NotFoundContent />
+      </main>
+      <Footer />
+    </>
+  );
+}
 
 const quickLinks = [
   { label: "About", href: "/about" },
@@ -89,7 +103,7 @@ function LostNetwork() {
   );
 }
 
-export default function NotFound() {
+function NotFoundContent() {
   return (
     <section
       className="relative flex min-h-[640px] items-center overflow-hidden py-20 lg:min-h-[780px]"
