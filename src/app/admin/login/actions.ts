@@ -13,7 +13,15 @@ export async function login(
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return { error: "Invalid email or password." };
+  if (error) {
+  console.error("Sign-in failed:", error.code, error.message);
+  return {
+    error:
+      process.env.NODE_ENV !== "production"
+        ? `${error.message}${error.code ? ` (${error.code})` : ""}`
+        : "Invalid email or password.",
+  };
+}
 
   redirect("/admin");
 }
