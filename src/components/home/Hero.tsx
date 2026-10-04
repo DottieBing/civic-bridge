@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import HeroNetwork from "@/components/home/HeroNetwork";
 
-export default function Hero() {
+export default function Hero({ note = [] }: { note?: string[] }) {
   return (
     <section
       className="relative flex min-h-[560px] items-center py-16 lg:min-h-[846px]"
@@ -47,9 +47,11 @@ export default function Hero() {
       </Container>
 
       <p className="absolute bottom-[58px] right-6 hidden text-[8px] leading-[14px] tracking-[1.6px] text-black lg:block xl:right-[85px]">
-        Operational base: Nigeria
-        <br />
-        Working across Africa
+        {note.filter(Boolean).map((line, i) => (
+          <span key={i} className="block">
+            {line}
+          </span>
+        ))}
       </p>
     </section>
   );

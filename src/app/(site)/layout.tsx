@@ -14,3 +14,5 @@ export default function SiteLayout({
     </>
   );
 }
+
+export const revalidate = 60;

@@ -10,11 +10,19 @@ import UpcomingEvent from "@/components/home/UpcomingEvent";
 import Testimonials from "@/components/home/Testimonials";
 import GetInvolved from "@/components/home/GetInvolved";
 import Newsletter from "@/components/home/Newsletter";
+import { getSettings, getTestimonials } from "@/lib/content";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const [settings, testimonials] = await Promise.all([
+    getSettings(),
+    getTestimonials(),
+  ]);
+
   return (
     <>
-      <Hero />
+      <Hero note={[settings.hero_note_1, settings.hero_note_2]} />
       <Purpose />
       <WhatWeDo />
       <Spotlight />
@@ -23,7 +31,7 @@ export default function Home() {
       <Research />
       <Insights />
       <UpcomingEvent />
-      <Testimonials />
+      <Testimonials items={testimonials} />
       <GetInvolved />
       <Newsletter />
     </>

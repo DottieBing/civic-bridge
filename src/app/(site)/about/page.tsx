@@ -3,13 +3,18 @@ import PageHero from "@/components/ui/PageHero";
 import StoryAndPurpose from "@/components/about/StoryAndPurpose";
 import ValuesAndPractice from "@/components/about/ValuesAndPractice";
 import ReachAndTeam from "@/components/about/ReachAndTeam";
+import Leadership from "@/components/about/Leadership";
 import PublicDocuments from "@/components/about/PublicDocuments";
+import { getDocuments, getTeam } from "@/lib/content";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "About | Civic Bridge Africa",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [team, docs] = await Promise.all([getTeam(), getDocuments("public")]);
   return (
     <>
       <PageHero
@@ -19,8 +24,9 @@ export default function AboutPage() {
       />
       <StoryAndPurpose />
       <ValuesAndPractice />
-      <ReachAndTeam />
-      <PublicDocuments />
+      <ReachAndTeam team={team} />
+      <Leadership team={team} />
+      <PublicDocuments docs={docs} />
     </>
   );
 }

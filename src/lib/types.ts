@@ -89,3 +89,46 @@ export type CaseStudy = {
   created_at: string;
   updated_at: string;
 };
+
+export type DocumentItem = {
+  id: string;
+  title: string;
+  kind: "public" | "annual";
+  file_url: string;
+  file_name: string | null;
+  file_size_bytes: number | null;
+  year: number | null;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string | null;
+  bio: string | null;
+  photo_url: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+export type Testimonial = {
+  id: string;
+  quote: string;
+  name: string;
+  role: string | null;
+  photo_url: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+export type Stat = { id: string; label: string; value: string; sort_order: number };
+
+export type ImpactArea = {
+  id: string;
+  title: string;
+  description: string | null;
+  sort_order: number;
+};

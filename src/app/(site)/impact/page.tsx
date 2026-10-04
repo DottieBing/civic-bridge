@@ -4,7 +4,13 @@ import ImpactStatsGrid from "@/components/impact/ImpactStatsGrid";
 import ImpactAreas from "@/components/impact/ImpactAreas";
 import CaseStudies from "@/components/impact/CaseStudies";
 import AnnualReports from "@/components/impact/AnnualReports";
-import { getCaseStudies } from "@/lib/content";
+import {
+  getCaseStudies,
+  getDocuments,
+  getImpactAreas,
+  getStats,
+  getTeam,
+} from "@/lib/content";
 
 export const revalidate = 60;
 
@@ -13,7 +19,14 @@ export const metadata: Metadata = {
 };
 
 export default async function ImpactPage() {
-  const studies = await getCaseStudies();
+  const [studies, stats, areas, docs, team] = await Promise.all([
+    getCaseStudies(),
+    getStats(),
+    getImpactAreas(),
+    getDocuments("annual"),
+    getTeam(),
+  ]);
+
   return (
     <>
       <PageHero
@@ -22,10 +35,10 @@ export default async function ImpactPage() {
         title="Measuring participation, progress, and public value."
         description="We measure impact through inputs, activities, outputs, and outcomes — and we publish what we learn openly."
       />
-      <ImpactStatsGrid />
-      <ImpactAreas />
+      <ImpactStatsGrid stats={stats} />
+      <ImpactAreas areas={areas} />
       <CaseStudies studies={studies} />
-      <AnnualReports />
+      <AnnualReports docs={docs} hasTeam={team.length > 0} />
     </>
   );
 }

@@ -74,3 +74,15 @@ export function isUpcoming(e: { starts_at: string; ends_at: string | null }) {
     : new Date(e.starts_at).getTime() + 4 * 3600 * 1000;
   return end >= Date.now();
 }
+
+export function fileMeta(name?: string | null, size?: number | null) {
+  const ext = name?.split(".").pop()?.toUpperCase();
+  const type = ext && ext.length <= 4 ? ext : "FILE";
+  if (!size) return type;
+  const mb = size / (1024 * 1024);
+  const label =
+    mb >= 1
+      ? `${mb.toFixed(mb >= 10 ? 0 : 1)}MB`
+      : `${Math.max(1, Math.round(size / 1024))}KB`;
+  return `${type} · ${label}`;
+}

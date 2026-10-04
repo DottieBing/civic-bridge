@@ -7,18 +7,23 @@ import { uploadFile } from "@/lib/storage";
 export default function FileUpload({
   urlName,
   nameName,
+  sizeName,
   folder,
   defaultUrl = "",
   defaultFileName = "",
+  defaultSize,
 }: {
   urlName: string;
   nameName: string;
+  sizeName?: string;
   folder: string;
   defaultUrl?: string | null;
   defaultFileName?: string | null;
+  defaultSize?: number | null;
 }) {
   const [url, setUrl] = useState(defaultUrl ?? "");
   const [fileName, setFileName] = useState(defaultFileName ?? "");
+  const [size, setSize] = useState<number | "">(defaultSize ?? "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const ref = useRef<HTMLInputElement>(null);
@@ -33,6 +38,7 @@ export default function FileUpload({
       const res = await uploadFile(file, folder);
       setUrl(res.url);
       setFileName(res.name);
+      setSize(res.size);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed.");
     } finally {
@@ -44,6 +50,7 @@ export default function FileUpload({
     <div>
       <input type="hidden" name={urlName} value={url} />
       <input type="hidden" name={nameName} value={fileName} />
+      {sizeName && <input type="hidden" name={sizeName} value={size} />}
 
       {url ? (
         <div className="flex items-center gap-3 rounded-xl border border-black/10 bg-[#f4fbfb] p-4">
@@ -54,7 +61,11 @@ export default function FileUpload({
           <button type="button" onClick={() => ref.current?.click()} disabled={busy} className="text-[13px] text-navy underline underline-offset-2">
             {busy ? "Uploading…" : "Replace"}
           </button>
-          <button type="button" onClick={() => { setUrl(""); setFileName(""); }} className="text-[13px] text-red-700 underline underline-offset-2">
+          <button
+            type="button"
+            onClick={() => { setUrl(""); setFileName(""); setSize(""); }}
+            className="text-[13px] text-red-700 underline underline-offset-2"
+          >
             Remove
           </button>
         </div>

@@ -8,17 +8,20 @@ export default function ImageUpload({
   name,
   folder,
   defaultValue = "",
+  square = false,
   hint = "JPG, PNG or WebP, up to 5 MB",
 }: {
   name: string;
   folder: string;
   defaultValue?: string | null;
+  square?: boolean;
   hint?: string;
 }) {
   const [url, setUrl] = useState(defaultValue ?? "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const ref = useRef<HTMLInputElement>(null);
+  const shape = square ? "aspect-square max-w-[240px]" : "aspect-[16/9] w-full";
 
   async function onPick(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -41,23 +44,15 @@ export default function ImageUpload({
 
       {url ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={url}
-          alt=""
-          className="aspect-[16/9] w-full rounded-2xl border border-black/10 object-cover"
-        />
+        <img src={url} alt="" className={`${shape} rounded-2xl border border-black/10 object-cover`} />
       ) : (
         <button
           type="button"
           onClick={() => ref.current?.click()}
-          className="grid aspect-[16/9] w-full place-items-center rounded-2xl border border-dashed border-[#c3c3c3] text-[14px] text-black/50 transition hover:border-navy hover:text-navy"
+          className={`${shape} grid w-full place-items-center rounded-2xl border border-dashed border-[#c3c3c3] text-[14px] text-black/50 transition hover:border-navy hover:text-navy`}
         >
           <span className="flex flex-col items-center gap-2">
-            {busy ? (
-              <Loader2 className="animate-spin" size={24} />
-            ) : (
-              <ImagePlus size={24} strokeWidth={1.5} />
-            )}
+            {busy ? <Loader2 className="animate-spin" size={24} /> : <ImagePlus size={24} strokeWidth={1.5} />}
             {busy ? "Uploading…" : "Click to upload"}
           </span>
         </button>
@@ -74,19 +69,10 @@ export default function ImageUpload({
       <div className="mt-2 flex items-center gap-4 text-[13px]">
         {url && (
           <>
-            <button
-              type="button"
-              onClick={() => ref.current?.click()}
-              disabled={busy}
-              className="text-navy underline underline-offset-2"
-            >
+            <button type="button" onClick={() => ref.current?.click()} disabled={busy} className="text-navy underline underline-offset-2">
               {busy ? "Uploading…" : "Replace"}
             </button>
-            <button
-              type="button"
-              onClick={() => setUrl("")}
-              className="text-red-700 underline underline-offset-2"
-            >
+            <button type="button" onClick={() => setUrl("")} className="text-red-700 underline underline-offset-2">
               Remove
             </button>
           </>

@@ -1,18 +1,9 @@
 import Container from "@/components/ui/Container";
+import type { ImpactArea } from "@/lib/types";
 
-const desc =
-  "A short description of how this area is measured and reported across our programmes.";
+export default function ImpactAreas({ areas }: { areas: ImpactArea[] }) {
+  if (areas.length === 0) return null;
 
-const areas = [
-  { n: "01", title: "Knowledge" },
-  { n: "02", title: "Participation" },
-  { n: "03", title: "Accountability" },
-  { n: "04", title: "Policy influence" },
-  { n: "05", title: "Youth leadership" },
-  { n: "06", title: "Digital access" },
-];
-
-export default function ImpactAreas() {
   return (
     <section className="bg-[#eef9f9] pb-16 pt-16 lg:pb-[135px] lg:pt-[131px]">
       <Container>
@@ -24,18 +15,22 @@ export default function ImpactAreas() {
         </h2>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:mt-[75px] lg:grid-cols-3 lg:gap-x-[28px]">
-          {areas.map((a) => (
+          {areas.map((a, i) => (
             <div
-              key={a.n}
+              key={a.id}
               className="min-h-[201px] rounded-[24px] border border-black/30 bg-white px-[39px] py-[37px]"
             >
-              <p className="text-[14px] leading-[14px] text-teal-label">{a.n}</p>
+              <p className="text-[14px] leading-[14px] text-teal-label">
+                {String(i + 1).padStart(2, "0")}
+              </p>
               <h3 className="mt-[13px] text-[20px] font-normal leading-[28px] text-black">
                 {a.title}
               </h3>
-              <p className="mt-[11px] max-w-[290px] text-[16px] leading-[19px] text-[#4d4d4d]">
-                {desc}
-              </p>
+              {a.description && (
+                <p className="mt-[11px] max-w-[290px] text-[16px] leading-[19px] text-[#4d4d4d]">
+                  {a.description}
+                </p>
+              )}
             </div>
           ))}
         </div>

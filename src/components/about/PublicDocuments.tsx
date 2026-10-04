@@ -1,17 +1,11 @@
-import Link from "next/link";
 import { Download } from "lucide-react";
 import Container from "@/components/ui/Container";
+import { fileMeta } from "@/lib/utils";
+import type { DocumentItem } from "@/lib/types";
 
-const docs = [
-  "Annual report 2025",
-  "Financial report 2025",
-  "Safeguarding policy",
-  "Code of conduct",
-  "Governance charter",
-  "Data privacy policy",
-];
+export default function PublicDocuments({ docs }: { docs: DocumentItem[] }) {
+  if (docs.length === 0) return null;
 
-export default function PublicDocuments() {
   return (
     <section className="py-16 lg:pb-[205px] lg:pt-[199px]">
       <Container>
@@ -24,23 +18,25 @@ export default function PublicDocuments() {
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:mt-[75px] lg:grid-cols-3 lg:gap-x-[28px]">
           {docs.map((d) => (
-            <Link
-              key={d}
-              href="#"
-              className="group flex min-h-[124px] items-start justify-between rounded-[20px] border border-black/15 bg-white px-[39px] py-[38px] transition hover:border-black/40"
+            <a
+              key={d.id}
+              href={d.file_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex min-h-[124px] items-start justify-between gap-4 rounded-[20px] border border-black/15 bg-white px-[39px] py-[38px] transition hover:border-black/40"
             >
-              <div>
-                <p className="text-[20px] leading-[30px] text-black">{d}</p>
+              <div className="min-w-0">
+                <p className="text-[20px] leading-[30px] text-black">{d.title}</p>
                 <p className="mt-[7px] text-[12px] leading-[14px] text-black/60">
-                  PDF · 12MB
+                  {fileMeta(d.file_name, d.file_size_bytes)}
                 </p>
               </div>
               <Download
                 size={20}
                 strokeWidth={1.5}
-                className="mt-[6px] text-navy transition group-hover:translate-y-[2px]"
+                className="mt-[6px] shrink-0 text-navy transition group-hover:translate-y-[2px]"
               />
-            </Link>
+            </a>
           ))}
         </div>
       </Container>

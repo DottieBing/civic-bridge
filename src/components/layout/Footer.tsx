@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import SubscribeForm from "@/components/ui/SubscribeForm";
+import { getSettings } from "@/lib/content";
 
 const columns = [
   {
@@ -52,7 +53,8 @@ const columns = [
 
 const legal = ["Privacy", "Term of use", "Accessibility", "Cookies"];
 
-export default function Footer() {
+export default async function Footer() {
+  const s = await getSettings();
   return (
     <footer className="bg-navy text-white">
       <Container className="pt-[80px] xl:pt-[150px]">
@@ -67,8 +69,7 @@ export default function Footer() {
               className="xl:mt-[5px]"
             />
             <p className="mt-[25px] max-w-[317px] text-[16.7px] leading-[31px]">
-              A nonprofit civic hub advancing informed participation,
-              accountable leadership, and inclusive governance across Africa.
+              {s.footer_about}
             </p>
 
             <div className="mt-[37px] max-w-[330px]">
@@ -114,8 +115,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-6 border-t border-white/20 pb-16 pt-10 xl:flex-row xl:items-start xl:justify-between xl:pb-[121px] xl:pt-[53px]">
           <p className="max-w-[680px] text-[14px] leading-[35px]">
-            © 2026 Civic Bridge Africa. Operating from Nigeria. Registration
-            details to be confirmed.
+            {s.footer_copyright}
           </p>
           <ul className="flex flex-wrap gap-x-[52px] gap-y-2 text-[15.1px] leading-[35px] xl:pr-[14px]">
             {legal.map((l) => (
