@@ -26,7 +26,7 @@ export default async function InsightsAdminPage() {
           image: r.cover_image,
           published: r.published,
           featured: r.featured,
-          viewHref: r.published ? `/insights/${r.slug}` : undefined,
+          viewHref: r.published ? `/insights/${r.slug}` : `/api/preview?path=/insights/${r.slug}`,
           editHref: `/admin/insights/${r.id}`,
         }))}
       />

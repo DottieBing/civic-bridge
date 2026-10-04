@@ -1,5 +1,8 @@
+import { draftMode } from "next/headers";
 import { supabasePublic } from "@/lib/supabase/public";
+import { createClient } from "@/lib/supabase/server";
 import { SETTING_DEFAULTS, type Settings } from "@/lib/settings";
+import { isUpcoming } from "@/lib/utils";
 import type {
   CaseStudy,
   DocumentItem,
@@ -13,6 +16,23 @@ import type {
   Testimonial,
 } from "@/lib/types";
 
+// In preview mode (admins only) drafts can be read through the signed-in session.
+async function reader() {
+  const { isEnabled } = await draftMode();
+  return isEnabled
+    ? { db: await createClient(), preview: true }
+    : { db: supabasePublic, preview: false };
+}
+
+async function bySlug<T>(table: string, slug: string): Promise<T | null> {
+  const { db, preview } = await reader();
+  let q = db.from(table).select("*").eq("slug", slug);
+  if (!preview) q = q.eq("published", true);
+  const { data } = await q.maybeSingle();
+  return (data as T | null) ?? null;
+}
+
+/* Programs */
 export async function getPrograms(): Promise<Program[]> {
   const { data } = await supabasePublic
     .from("programs")
@@ -23,17 +43,20 @@ export async function getPrograms(): Promise<Program[]> {
     .order("created_at", { ascending: false });
   return (data ?? []) as Program[];
 }
+export const getProgram = (slug: string) => bySlug<Program>("programs", slug);
 
-export async function getProgram(slug: string): Promise<Program | null> {
+export async function getFeaturedProgram(): Promise<Program | null> {
   const { data } = await supabasePublic
     .from("programs")
     .select("*")
-    .eq("slug", slug)
     .eq("published", true)
-    .maybeSingle();
-  return (data as Program | null) ?? null;
+    .eq("featured", true)
+    .order("sort_order", { ascending: true })
+    .limit(1);
+  return ((data ?? [])[0] as Program | undefined) ?? null;
 }
 
+/* Research */
 export async function getResearch(): Promise<Research[]> {
   const { data } = await supabasePublic
     .from("research")
@@ -44,17 +67,9 @@ export async function getResearch(): Promise<Research[]> {
     .order("created_at", { ascending: false });
   return (data ?? []) as Research[];
 }
+export const getResearchItem = (slug: string) => bySlug<Research>("research", slug);
 
-export async function getResearchItem(slug: string): Promise<Research | null> {
-  const { data } = await supabasePublic
-    .from("research")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
-  return (data as Research | null) ?? null;
-}
-
+/* Insights */
 export async function getInsights(): Promise<Insight[]> {
   const { data } = await supabasePublic
     .from("insights")
@@ -65,17 +80,9 @@ export async function getInsights(): Promise<Insight[]> {
     .order("created_at", { ascending: false });
   return (data ?? []) as Insight[];
 }
+export const getInsight = (slug: string) => bySlug<Insight>("insights", slug);
 
-export async function getInsight(slug: string): Promise<Insight | null> {
-  const { data } = await supabasePublic
-    .from("insights")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
-  return (data as Insight | null) ?? null;
-}
-
+/* Events */
 export async function getEvents(): Promise<EventItem[]> {
   const { data } = await supabasePublic
     .from("events")
@@ -84,17 +91,23 @@ export async function getEvents(): Promise<EventItem[]> {
     .order("starts_at", { ascending: true });
   return (data ?? []) as EventItem[];
 }
+export const getEvent = (slug: string) => bySlug<EventItem>("events", slug);
 
-export async function getEvent(slug: string): Promise<EventItem | null> {
+// The event shown on Home: a featured upcoming one, otherwise the next one
+export async function getHomeEvent(): Promise<EventItem | null> {
+  const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
   const { data } = await supabasePublic
     .from("events")
     .select("*")
-    .eq("slug", slug)
     .eq("published", true)
-    .maybeSingle();
-  return (data as EventItem | null) ?? null;
+    .gte("starts_at", since)
+    .order("starts_at", { ascending: true })
+    .limit(30);
+  const upcoming = ((data ?? []) as EventItem[]).filter(isUpcoming);
+  return upcoming.find((e) => e.featured) ?? upcoming[0] ?? null;
 }
 
+/* Impact stories */
 export async function getCaseStudies(): Promise<CaseStudy[]> {
   const { data } = await supabasePublic
     .from("case_studies")
@@ -104,17 +117,9 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
     .order("created_at", { ascending: false });
   return (data ?? []) as CaseStudy[];
 }
+export const getCaseStudy = (slug: string) => bySlug<CaseStudy>("case_studies", slug);
 
-export async function getCaseStudy(slug: string): Promise<CaseStudy | null> {
-  const { data } = await supabasePublic
-    .from("case_studies")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
-  return (data as CaseStudy | null) ?? null;
-}
-
+/* Documents, team, testimonials, stats, areas, settings */
 export async function getDocuments(kind: "public" | "annual"): Promise<DocumentItem[]> {
   const { data } = await supabasePublic
     .from("documents")

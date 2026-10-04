@@ -151,6 +151,20 @@ export default function ProgramForm({ program }: { program?: Program }) {
           <Field label="Reach">
             <input name="reach" defaultValue={program?.reach ?? ""} className={inputClass} placeholder="500+ fellows engaged" />
           </Field>
+                    <Field label="Duration">
+            <input name="duration" defaultValue={program?.duration ?? ""} className={inputClass} placeholder="12 months" />
+          </Field>
+          <Field label="Audience">
+            <input name="audience" defaultValue={program?.audience ?? ""} className={inputClass} placeholder="Ages 18–30" />
+          </Field>
+          <Field label="Home headline" hint="used if this is the featured program">
+            <input
+              name="spotlight_headline"
+              defaultValue={program?.spotlight_headline ?? ""}
+              className={inputClass}
+              placeholder="Equipping young Africans with advocacy skills and civic platforms."
+            />
+          </Field>
         </Card>
       </aside>
     </form>

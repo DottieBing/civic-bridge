@@ -10,27 +10,41 @@ import UpcomingEvent from "@/components/home/UpcomingEvent";
 import Testimonials from "@/components/home/Testimonials";
 import GetInvolved from "@/components/home/GetInvolved";
 import Newsletter from "@/components/home/Newsletter";
-import { getSettings, getTestimonials } from "@/lib/content";
+import {
+  getFeaturedProgram,
+  getHomeEvent,
+  getInsights,
+  getResearch,
+  getSettings,
+  getStats,
+  getTestimonials,
+} from "@/lib/content";
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const [settings, testimonials] = await Promise.all([
-    getSettings(),
-    getTestimonials(),
-  ]);
+  const [settings, testimonials, program, reports, posts, stats, event] =
+    await Promise.all([
+      getSettings(),
+      getTestimonials(),
+      getFeaturedProgram(),
+      getResearch(),
+      getInsights(),
+      getStats(),
+      getHomeEvent(),
+    ]);
 
   return (
     <>
       <Hero note={[settings.hero_note_1, settings.hero_note_2]} />
       <Purpose />
       <WhatWeDo />
-      <Spotlight />
-      <ImpactStats />
+      <Spotlight program={program} />
+      <ImpactStats stats={stats} />
       <ImpactModel />
-      <Research />
-      <Insights />
-      <UpcomingEvent />
+      <Research reports={reports} />
+      <Insights posts={posts} />
+      <UpcomingEvent event={event} />
       <Testimonials items={testimonials} />
       <GetInvolved />
       <Newsletter />

@@ -15,7 +15,7 @@ const interests = [
 const field =
   "w-full rounded-[20px] border border-[#c3c3c3] bg-white px-5 py-4 text-[16px] text-black outline-none transition placeholder:text-black/40 focus:border-navy";
 
-export default function ContactForm() {
+export default function ContactForm({ email }: { email?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
@@ -54,6 +54,14 @@ export default function ContactForm() {
             Tell us how you&apos;d like to help.
           </h2>
           <p className="mt-5 max-w-[460px] text-[18px] leading-[32px] tracking-[0.6px] text-black lg:text-[20px] lg:leading-[37px]">
+          {email && (
+            <p className="mt-6 text-[16px] text-black/70">
+              Prefer email?{" "}
+              <a href={`mailto:${email}`} className="text-navy underline underline-offset-2">
+                {email}
+              </a>
+            </p>
+          )}
             Whether you have an hour, a skill, or an institution behind you,
             there is a place for you in this work.
           </p>

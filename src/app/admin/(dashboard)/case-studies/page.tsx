@@ -27,7 +27,7 @@ export default async function CaseStudiesAdminPage() {
             .join(" · "),
           image: r.cover_image,
           published: r.published,
-          viewHref: r.published ? `/impact/${r.slug}` : undefined,
+          viewHref: r.published ? `/impact/${r.slug}` : `/api/preview?path=/impact/${r.slug}`,
           editHref: `/admin/case-studies/${r.id}`,
         }))}
       />

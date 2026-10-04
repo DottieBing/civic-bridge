@@ -1,13 +1,9 @@
 import Container from "@/components/ui/Container";
+import type { Stat } from "@/lib/types";
 
-const stats = [
-  { value: "5,000+", label: "Citizens reached" },
-  { value: "18", label: "Communities engaged" },
-  { value: "40", label: "Civic learning sessions" },
-  { value: "12", label: "Research and policy outputs" },
-];
+export default function ImpactStats({ stats }: { stats: Stat[] }) {
+  if (stats.length === 0) return null;
 
-export default function ImpactStats() {
   return (
     <section className="bg-navy pb-20 pt-[100px] xl:pb-[179px]">
       <Container>
@@ -16,11 +12,8 @@ export default function ImpactStats() {
         </p>
 
         <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 text-white xl:mt-[183px] xl:grid-cols-4 xl:gap-x-[46px]">
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              className="flex flex-col gap-2 border-t border-white/15 pt-[38px]"
-            >
+          {stats.slice(0, 4).map((s) => (
+            <div key={s.id} className="flex flex-col gap-2 border-t border-white/15 pt-[38px]">
               <p className="text-[44px] font-bold leading-[1] tracking-[-0.64px] md:text-[64px]">
                 {s.value}
               </p>

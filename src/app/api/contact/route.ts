@@ -1,16 +1,27 @@
 import { NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { notify } from "@/lib/notify";
 
 export async function POST(req: Request) {
+  if (!rateLimit(`contact:${clientIp(req)}`, 4)) {
+    return NextResponse.json(
+      { error: "Too many messages. Please try again later." },
+      { status: 429 },
+    );
+  }
+
   const body = await req.json().catch(() => ({}));
-  const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
+  const str = (v: unknown, max: number) =>
+    typeof v === "string" ? v.trim().slice(0, max) : "";
 
-  // Honeypot: pretend success so bots learn nothing
-  if (str(body.company)) return NextResponse.json({ ok: true });
+  // Honeypot: bots fill this hidden field, people never see it
+  if (str(body.company, 100)) return NextResponse.json({ ok: true });
 
-  const name = str(body.name);
-  const email = str(body.email);
-  const message = str(body.message);
-  const interest = str(body.interest);
+  const name = str(body.name, 120);
+  const email = str(body.email, 254).toLowerCase();
+  const interest = str(body.interest, 80);
+  const message = str(body.message, 5000);
 
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
@@ -18,36 +29,24 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  if (message.length > 5000) {
-    return NextResponse.json({ error: "Message is too long." }, { status: 400 });
-  }
 
-  const url = process.env.CONTACT_WEBHOOK_URL;
-  if (!url) {
-    return NextResponse.json(
-      { error: "The contact form isn't connected yet." },
-      { status: 503 },
-    );
-  }
+  const { error } = await createAdminClient()
+    .from("messages")
+    .insert({ name, email, interest: interest || null, message });
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name,
-      email,
-      interest,
-      message,
-      source: "website",
-      at: new Date().toISOString(),
-    }),
-  });
-
-  if (!res.ok) {
+  if (error) {
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
-      { status: 502 },
+      { status: 500 },
     );
   }
+
+  await notify(process.env.CONTACT_WEBHOOK_URL, {
+    name,
+    email,
+    interest,
+    message,
+    at: new Date().toISOString(),
+  });
   return NextResponse.json({ ok: true });
 }

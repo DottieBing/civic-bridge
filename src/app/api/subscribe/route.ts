@@ -1,39 +1,42 @@
 import { NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { notify } from "@/lib/notify";
 
 export async function POST(req: Request) {
-  const body = await req.json().catch(() => ({}));
-  const email = typeof body.email === "string" ? body.email.trim() : "";
+  if (!rateLimit(`subscribe:${clientIp(req)}`, 5)) {
+    return NextResponse.json(
+      { error: "Too many attempts. Please try again later." },
+      { status: 429 },
+    );
+  }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  const body = await req.json().catch(() => ({}));
+  const email =
+    typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
     return NextResponse.json(
       { error: "Please enter a valid email address." },
       { status: 400 },
     );
   }
 
-  const url = process.env.NEWSLETTER_WEBHOOK_URL;
-  if (!url) {
-    return NextResponse.json(
-      { error: "Subscriptions aren't connected yet." },
-      { status: 503 },
-    );
-  }
+  const { error } = await createAdminClient()
+    .from("subscribers")
+    .upsert({ email, source: "website" }, { onConflict: "email", ignoreDuplicates: true });
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email,
-      source: "website",
-      at: new Date().toISOString(),
-    }),
-  });
-
-  if (!res.ok) {
+  if (error) {
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
-      { status: 502 },
+      { status: 500 },
     );
   }
+
+  await notify(process.env.NEWSLETTER_WEBHOOK_URL, {
+    email,
+    source: "website",
+    at: new Date().toISOString(),
+  });
   return NextResponse.json({ ok: true });
 }

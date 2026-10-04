@@ -86,3 +86,15 @@ export function fileMeta(name?: string | null, size?: number | null) {
       : `${Math.max(1, Math.round(size / 1024))}KB`;
   return `${type} · ${label}`;
 }
+
+// "24 · 09 · 26" in Nigerian time
+export function dotDate(iso: string) {
+  return new Date(iso)
+    .toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      timeZone: EVENT_TZ,
+    })
+    .replace(/\//g, " · ");
+}

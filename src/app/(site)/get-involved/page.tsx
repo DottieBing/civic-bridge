@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
 import GetInvolved from "@/components/home/GetInvolved";
 import ContactForm from "@/components/get-involved/ContactForm";
+import { getSettings } from "@/lib/content";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Get involved | Civic Bridge Africa",
 };
 
-export default function GetInvolvedPage() {
+export default async function GetInvolvedPage() {
+  const settings = await getSettings();
   return (
     <>
       <PageHero
@@ -15,7 +19,7 @@ export default function GetInvolvedPage() {
         title="There are many ways to strengthen civic life."
       />
       <GetInvolved />
-      <ContactForm />
+      <ContactForm email={settings.contact_email || undefined} />
     </>
   );
 }

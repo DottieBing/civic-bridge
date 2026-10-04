@@ -8,6 +8,9 @@ export type Program = {
   status: string;
   location: string | null;
   reach: string | null;
+  duration: string | null;
+  audience: string | null;
+  spotlight_headline: string | null;
   cover_image: string | null;
   featured: boolean;
   sort_order: number;

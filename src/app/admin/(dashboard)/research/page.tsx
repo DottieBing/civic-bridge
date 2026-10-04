@@ -26,7 +26,7 @@ export default async function ResearchAdminPage() {
           image: r.cover_image,
           published: r.published,
           featured: r.featured,
-          viewHref: r.published ? `/research/${r.slug}` : undefined,
+          viewHref: r.published ? `/research/${r.slug}` : `/api/preview?path=/research/${r.slug}`,
           editHref: `/admin/research/${r.id}`,
         }))}
       />

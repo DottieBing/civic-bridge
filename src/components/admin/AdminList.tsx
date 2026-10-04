@@ -51,7 +51,7 @@ export default function AdminList({
           </div>
           {r.viewHref && (
             <Link href={r.viewHref} target="_blank" className="text-[14px] text-black/50 hover:text-navy">
-              View ↗
+              {r.published ? "View ↗" : "Preview ↗"}
             </Link>
           )}
           <Link

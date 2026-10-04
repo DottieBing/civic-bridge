@@ -41,6 +41,8 @@ export default async function ProgramPage({ params }: Props) {
     { label: "Status", value: program.status },
     { label: "Location", value: program.location },
     { label: "Reach", value: program.reach },
+    { label: "Duration", value: program.duration },
+    { label: "Audience", value: program.audience },
     { label: "Category", value: program.category },
   ].filter((f) => f.value);
 

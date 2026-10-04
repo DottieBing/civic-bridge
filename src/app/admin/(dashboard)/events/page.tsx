@@ -26,7 +26,7 @@ export default async function EventsAdminPage() {
           image: e.cover_image,
           published: e.published,
           featured: e.featured,
-          viewHref: e.published ? `/events/${e.slug}` : undefined,
+          viewHref: e.published ? `/events/${e.slug}` : `/api/preview?path=/events/${e.slug}`,
           editHref: `/admin/events/${e.id}`,
         }))}
       />
