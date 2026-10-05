@@ -3,7 +3,6 @@ import PageHero from "@/components/ui/PageHero";
 import StoryAndPurpose from "@/components/about/StoryAndPurpose";
 import ValuesAndPractice from "@/components/about/ValuesAndPractice";
 import ReachAndTeam from "@/components/about/ReachAndTeam";
-import Leadership from "@/components/about/Leadership";
 import PublicDocuments from "@/components/about/PublicDocuments";
 import { getDocuments, getTeam } from "@/lib/content";
 
@@ -25,7 +24,6 @@ export default async function AboutPage() {
       <StoryAndPurpose />
       <ValuesAndPractice />
       <ReachAndTeam team={team} />
-      <Leadership team={team} />
       <PublicDocuments docs={docs} />
     </>
   );

@@ -27,10 +27,10 @@ export async function saveTeamMember(
     published: formData.get("published") === "on",
   };
 
-  return saveRow("team_members", id, row, ["/about"], "/admin/team");
+  return saveRow("team_members", id, row, ["/about", "/about/team"], "/admin/team");
 }
 
 export async function deleteTeamMember(formData: FormData) {
   await requireAdmin();
-  await removeRow("team_members", str(formData.get("id")), ["/about"], "/admin/team");
+  await removeRow("team_members", str(formData.get("id")), ["/about", "/about/team"], "/admin/team");
 }

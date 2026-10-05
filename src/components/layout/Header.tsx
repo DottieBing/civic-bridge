@@ -18,6 +18,8 @@ const links = [
 
 export default function Header() {
   const pathname = usePathname();
+  const isActive = (href: string) =>
+  pathname === href || pathname.startsWith(`${href}/`);
   const [open, setOpen] = useState(false);
 
   return (
@@ -72,7 +74,7 @@ export default function Header() {
               href={l.href}
               onClick={() => setOpen(false)}
               className={`text-[16px] font-medium transition ${
-                pathname === l.href
+                isActive(l.href)
                   ? "text-teal"
                   : "text-[#474747] hover:text-navy"
               }`}

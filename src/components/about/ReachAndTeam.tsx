@@ -77,7 +77,7 @@ export default function ReachAndTeam({ team }: { team: TeamMember[] }) {
             </p>
             {team.length > 0 && (
               <Link
-                href="#leadership"
+                href="/about/team"
                 className="mt-[34px] inline-flex h-[48px] items-center gap-2 rounded-full bg-white px-[51px] text-[15px] font-bold text-navy transition hover:brightness-95"
               >
                 Meet our leadership

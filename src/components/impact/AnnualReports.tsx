@@ -64,7 +64,7 @@ export default function AnnualReports({
         {hasTeam && (
           <div className={showNote ? "mt-4" : "mt-[52px]"}>
             <Link
-              href="/about#leadership"
+              href="/about/team"
               className="inline-flex h-[66px] items-center gap-[8px] rounded-full bg-amber px-[50px] text-[15px] font-medium text-navy transition hover:brightness-95"
             >
               Meet our leadership

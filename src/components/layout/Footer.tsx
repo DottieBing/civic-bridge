@@ -10,7 +10,7 @@ const columns = [
     links: [
       { label: "Who We Are", href: "/about" },
       { label: "Mission and Vision", href: "/about" },
-      { label: "Leadership", href: "/about" },
+      { label: "Leadership", href: "/about/team" },
       { label: "Team", href: "/about" },
       { label: "Partners", href: "/about" },
       { label: "Governance", href: "/about" },
