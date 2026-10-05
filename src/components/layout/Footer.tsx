@@ -90,7 +90,7 @@ export default async function Footer() {
           </div>
 
           {/* Link columns */}
-          <nav className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 xl:grid-cols-[1fr_1fr_1fr_auto] xl:gap-x-0 2xl:grid-cols-[211px_211px_211px_136px]">
+          <nav className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 xl:grid-cols-[1fr_1fr_1fr_auto] xl:gap-x-0 2xl:grid-cols-[211px_211px_211px_136px]">
             {columns.map((col) => (
               <div key={col.title}>
                 <h3 className="text-[15.1px] font-normal uppercase leading-[16px] tracking-[0.5px] text-teal-light">
@@ -101,7 +101,7 @@ export default async function Footer() {
                     <li key={l.label}>
                       <Link
                         href={l.href}
-                        className="block text-[15.1px] leading-[58px] transition hover:text-teal-light"
+                        className="block text-[15.1px] leading-[44px] xl:leading-[58px] transition hover:text-teal-light"
                       >
                         {l.label}
                       </Link>

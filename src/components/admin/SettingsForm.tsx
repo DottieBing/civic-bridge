@@ -31,7 +31,7 @@ export default function SettingsForm({ values }: { values: Settings }) {
       </Card>
 
       <Card title="Contact">
-        <Field label="Contact email" hint="where messages from the website should go (used in Phase 4)">
+        <Field label="Contact email" hint="new website messages are emailed here">
           <input name="contact_email" type="email" defaultValue={values.contact_email} className={inputClass} placeholder="hello@example.org" />
         </Field>
       </Card>

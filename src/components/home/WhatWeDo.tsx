@@ -72,7 +72,7 @@ export default function WhatWeDo() {
           {cards.map((c) => (
             <div
               key={c.title}
-              className={`flex flex-col border-black py-[62px] pr-6 md:min-h-[448px] md:pr-8 ${c.cell}`}
+              className={`flex flex-col border-black py-10 pr-6 md:min-h-[448px] md:py-[62px] md:pr-8 ${c.cell}`}
             >
               <div className="grid size-[71px] place-items-center rounded-[16px] bg-[rgba(155,198,199,0.66)]">
                 {c.icon}

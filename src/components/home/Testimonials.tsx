@@ -27,7 +27,7 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
           {items.slice(0, 3).map((t) => (
             <figure
               key={t.id}
-              className="flex min-h-[323px] w-full max-w-[376px] flex-col justify-between rounded-[36px] border border-black px-[39px] py-[50px]"
+              className="flex w-full max-w-[376px] flex-col justify-between rounded-[36px] border border-black px-6 py-8 md:min-h-[323px] md:px-[39px] md:py-[50px]"
             >
               <blockquote className="text-[16px] leading-[30px] tracking-[0.54px] text-black md:text-[18px] md:leading-[37px]">
                 “{t.quote}”

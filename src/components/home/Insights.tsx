@@ -37,7 +37,7 @@ export default function Insights({ posts }: { posts: Insight[] }) {
                 )}
               </div>
 
-              <div className="mt-[61px] max-w-[407px]">
+              <div className="mt-8 max-w-[407px] lg:mt-[61px]">
                 <p className="text-[14px] uppercase leading-[37px] tracking-[5px] text-black sm:text-[18px] sm:tracking-[7.02px]">
                   {p.category}
                 </p>

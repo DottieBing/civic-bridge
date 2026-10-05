@@ -55,3 +55,6 @@ body {
 .rich-text blockquote { border-left: 3px solid var(--color-teal-light); padding-left: 1.2em; font-style: italic; color: var(--color-navy); }
 .rich-text img { max-width: 100%; height: auto; margin: 1.6em 0; border-radius: 28px; }
 .rich-text .tiptap { outline: none; min-height: 280px; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

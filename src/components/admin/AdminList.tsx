@@ -41,7 +41,10 @@ export default function AdminList({
           )}
           <div className="min-w-0 flex-1">
             <p className="truncate text-[16px] text-navy">{r.title}</p>
-            <p className="truncate text-[13px] text-black/50">{r.meta}</p>
+            <p className="truncate text-[13px] text-black/50">
+              {r.meta}
+              <span className="sm:hidden"> · {r.published ? "Published" : "Draft"}</span>
+            </p>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
             {r.featured && <Badge tone="amber">Featured</Badge>}
@@ -50,7 +53,7 @@ export default function AdminList({
             </Badge>
           </div>
           {r.viewHref && (
-            <Link href={r.viewHref} target="_blank" className="text-[14px] text-black/50 hover:text-navy">
+            <Link href={r.viewHref} target="_blank" className="hidden text-[14px] text-black/50 hover:text-navy sm:block">
               {r.published ? "View ↗" : "Preview ↗"}
             </Link>
           )}

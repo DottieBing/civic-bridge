@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/admin/ui";
 import SettingsForm from "@/components/admin/SettingsForm";
 import { createClient } from "@/lib/supabase/server";
 import { SETTING_DEFAULTS, type Settings } from "@/lib/settings";
+import TestEmailButton from "@/components/admin/TestEmailButton";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -20,6 +21,7 @@ export default async function SettingsPage() {
         description="Small pieces of text used around the site."
       />
       <SettingsForm values={values} />
+      <TestEmailButton />
     </div>
   );
 }

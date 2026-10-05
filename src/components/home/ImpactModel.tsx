@@ -35,27 +35,34 @@ export default function ImpactModel() {
           A five-step model for civic change.
         </h2>
 
-        <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:mt-[81px] lg:grid-cols-[repeat(4,1fr)_206px] lg:gap-x-0">
+        <ol className="mt-10 lg:mt-[81px] lg:grid lg:grid-cols-[repeat(4,1fr)_206px]">
           {steps.map((s, i) => (
-            <div key={s.title}>
-              <div className="flex items-center">
-                <span className="grid size-[57px] shrink-0 place-items-center rounded-full border-[0.5px] border-[#c3c3c3] text-[24px] font-medium leading-[37px] text-black">
+            <li key={s.title} className="relative flex gap-5 pb-10 last:pb-0 lg:block lg:pb-0">
+              {i < steps.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="absolute left-[28px] top-[57px] h-[calc(100%-57px)] w-px bg-[#c3c3c3] lg:hidden"
+                />
+              )}
+
+              <div className="flex shrink-0 items-center self-start lg:self-auto">
+                <span className="relative grid size-[57px] shrink-0 place-items-center rounded-full border-[0.5px] border-[#c3c3c3] bg-white text-[24px] font-medium leading-[37px] text-black">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="hidden h-px flex-1 bg-[#c3c3c3]/60 lg:block" />
               </div>
 
-              <div className="mt-[41px] flex max-w-[206px] flex-col gap-[10px] text-black">
-                <h3 className="text-[24px] font-medium leading-[37px]">
+              <div className="flex flex-col gap-[6px] pt-1 text-black lg:mt-[41px] lg:max-w-[206px] lg:gap-[10px] lg:pt-0">
+                <h3 className="text-[22px] font-medium leading-[30px] lg:text-[24px] lg:leading-[37px]">
                   {s.title}
                 </h3>
-                <p className="text-[18px] leading-[37px] tracking-[0.54px]">
+                <p className="text-[16px] leading-[26px] tracking-[0.3px] lg:text-[18px] lg:leading-[37px] lg:tracking-[0.54px]">
                   {s.body}
                 </p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </Container>
     </section>
   );

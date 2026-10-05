@@ -47,7 +47,7 @@ export default function SubscribeForm({
         className={`${
           dark
             ? "flex h-[56px] w-full max-w-[439px] items-center rounded-full border border-white/30 bg-white/10 pl-[28px] pr-[7px]"
-            : "flex h-[82px] w-full items-center rounded-full border border-[#c3c3c3] pl-6 pr-[10px] sm:pl-[50px]"
+            : "flex h-[64px] w-full items-center rounded-full border border-[#c3c3c3] pl-5 pr-[8px] sm:h-[82px] sm:pl-[50px] sm:pr-[10px]"
         } ${className}`}
       >
         <input
@@ -69,7 +69,7 @@ export default function SubscribeForm({
           className={
             dark
               ? "h-[41px] w-[137px] shrink-0 rounded-full bg-amber text-[14px] font-bold text-navy transition hover:brightness-95 disabled:opacity-60"
-              : "h-[62px] w-[130px] shrink-0 rounded-full bg-amber text-[18px] font-bold text-navy transition hover:brightness-95 disabled:opacity-60 sm:w-[170px] sm:text-[20px]"
+              : "h-[48px] w-[112px] shrink-0 rounded-full bg-amber text-[16px] font-bold text-navy transition hover:brightness-95 disabled:opacity-60 sm:h-[62px] sm:w-[170px] sm:text-[20px]"
           }
         >
           {status === "loading" ? "Sending…" : "Subscribe"}

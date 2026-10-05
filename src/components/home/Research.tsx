@@ -45,7 +45,7 @@ export default function Research({ reports }: { reports: ResearchItem[] }) {
             </div>
 
             <div className="bg-white px-6 pb-12 pt-10 sm:px-[63px] sm:pb-[61px] sm:pt-[50px]">
-              <p className="text-[13px] uppercase leading-[37px] tracking-[3px] text-black sm:text-[16px] sm:tracking-[5px]">
+              <p className="text-[13px] uppercase leading-[37px] tracking-[1.5px] text-black sm:text-[16px] sm:tracking-[5px]">
                 {meta}
               </p>
               <h3 className="mt-6 max-w-[480px] text-[24px] font-medium leading-[30px] tracking-[-0.2828px] text-black sm:mt-[30px] sm:text-[28.281px] sm:leading-[33.937px]">
@@ -59,7 +59,7 @@ export default function Research({ reports }: { reports: ResearchItem[] }) {
               <div className="mt-8 flex flex-wrap gap-4 sm:mt-[40px]">
                 <Link
                   href={`/research/${featured.slug}`}
-                  className="inline-flex items-center gap-[7px] rounded-pill bg-navy px-[25px] py-[9px] text-[18px] font-bold leading-[30px] text-white transition hover:opacity-90 sm:text-[20px]"
+                  className="w-full justify-center sm:w-auto inline-flex items-center gap-[7px] rounded-pill bg-navy px-[25px] py-[9px] text-[18px] font-bold leading-[30px] text-white transition hover:opacity-90 sm:text-[20px]"
                 >
                   Read report
                   <ArrowRight size={19} strokeWidth={1.75} />
@@ -69,7 +69,7 @@ export default function Research({ reports }: { reports: ResearchItem[] }) {
                     href={featured.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-[7px] rounded-pill border border-navy px-[25px] py-[9px] text-[18px] font-bold leading-[30px] text-navy transition hover:bg-navy hover:text-white sm:text-[20px]"
+                    className="w-full justify-center sm:w-auto inline-flex items-center gap-[7px] rounded-pill border border-navy px-[25px] py-[9px] text-[18px] font-bold leading-[30px] text-navy transition hover:bg-navy hover:text-white sm:text-[20px]"
                   >
                     <Download size={22} strokeWidth={1.5} />
                     Download PDF

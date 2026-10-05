@@ -58,21 +58,21 @@ export default function UpcomingEvent({ event }: { event: EventItem | null }) {
               {...(event.registration_url
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="inline-flex items-center gap-[7px] rounded-pill bg-amber px-[37px] py-[16px] text-[20px] font-bold leading-[30px] text-navy transition hover:brightness-95"
+              className="w-full justify-center sm:w-auto inline-flex items-center gap-[7px] rounded-pill bg-amber px-[37px] py-[16px] text-[18px] sm:text-[20px] font-bold leading-[30px] text-navy transition hover:brightness-95"
             >
               {event.registration_url ? "Register for event" : "View event"}
               <ArrowRight size={19} strokeWidth={1.75} />
             </Link>
             <Link
               href="/events"
-              className="inline-flex items-center rounded-pill border border-navy px-[37px] py-[16px] text-[20px] font-bold leading-[30px] text-navy transition hover:bg-navy hover:text-white"
+              className="w-full justify-center sm:w-auto inline-flex items-center rounded-pill border border-navy px-[37px] py-[16px] text-[18px] sm:text-[20px] font-bold leading-[30px] text-navy transition hover:bg-navy hover:text-white"
             >
               View all events
             </Link>
           </div>
         </div>
 
-        <div className="relative h-[620px] w-full max-w-[657px] overflow-hidden rounded-[56px] bg-navy sm:h-[897px] sm:rounded-[84px]">
+        <div className="relative h-[460px] w-full max-w-[657px] overflow-hidden rounded-[40px] bg-navy md:h-[620px] md:rounded-[56px] xl:h-[897px] xl:rounded-[84px]">
           {event.cover_image && (
             <Image
               src={event.cover_image}

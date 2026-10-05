@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { notify } from "@/lib/notify";
+import { newMessageEmail, sendEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   if (!rateLimit(`contact:${clientIp(req)}`, 4)) {
@@ -30,23 +31,46 @@ export async function POST(req: Request) {
     );
   }
 
-  const { error } = await createAdminClient()
+  const db = createAdminClient();
+  const { data: saved, error } = await db
     .from("messages")
-    .insert({ name, email, interest: interest || null, message });
+    .insert({ name, email, interest: interest || null, message })
+    .select("id")
+    .single();
 
-  if (error) {
+  if (error || !saved) {
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 },
     );
   }
 
-  await notify(process.env.CONTACT_WEBHOOK_URL, {
-    name,
-    email,
-    interest,
-    message,
-    at: new Date().toISOString(),
+  // Runs after the visitor already got their answer
+  after(async () => {
+    await notify(process.env.CONTACT_WEBHOOK_URL, {
+      name,
+      email,
+      interest,
+      message,
+      at: new Date().toISOString(),
+    });
+
+    const { data: setting } = await db
+      .from("site_settings")
+      .select("value")
+      .eq("key", "contact_email")
+      .maybeSingle();
+    const to =
+      (setting?.value as string | null)?.trim() ||
+      process.env.CONTACT_NOTIFY_EMAIL?.trim();
+    if (!to) return;
+
+    await sendEmail({
+      to,
+      replyTo: email,
+      ...newMessageEmail({ id: saved.id, name, email, interest, message }),
+    });
   });
+
   return NextResponse.json({ ok: true });
 }
