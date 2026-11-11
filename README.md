@@ -54,15 +54,15 @@ Everything on the site that isn't fixed brand copy is stored in Supabase and edi
 
 | Home | Programs |
 |---|---|
-| ![Home](docs/screenshots/home.png) | ![Programs](docs/screenshots/programs.png) |
+| ![Home](docs/screenshots/home.jpg) | ![Programs](docs/screenshots/programs.jpg) |
 
 | Research | Event page |
 |---|---|
-| ![Research](docs/screenshots/research.png) | ![Event](docs/screenshots/event.png) |
+| ![Research](docs/screenshots/research.jpg) | ![Event](docs/screenshots/event.jpg) |
 
 | Admin dashboard | Editor |
 |---|---|
-| ![Admin](docs/screenshots/admin.png) | ![Editor](docs/screenshots/editor.png) |
+| ![Admin](docs/screenshots/admin.jpg) | ![Editor](docs/screenshots/editor.jpg) |
 
 ## Features
 
